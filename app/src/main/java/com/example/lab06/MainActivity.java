@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Article> articleList;
 
     private void initData() {
+        articleList = new ArrayList<>();
         articleList.add(new Article(
                 "Khi Developer bảo test kỹ lắm rồi, không có bug đâu",
                 "Hôm nay trải nghiệm quả giao diện nhận mã OTP đỉnh cao của công nghệ 4.0 anh em ạ",
