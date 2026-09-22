@@ -1,7 +1,7 @@
 package com.example.lab06;
 
 import android.os.Bundle;
-import android.widget.Button;
+import android.content.Intent;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +15,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    RecyclerView recyclerView;
-    Button btLoad;
-    List countryList = new ArrayList();
+    private RecyclerView recyclerView;
+    private ArticleAdapter articleAdapter;
+    private List<Article> articleList;
+
+    private void initData() {
+        articleList.add(new Article(
+                "Khi Developer bảo test kỹ lắm rồi, không có bug đâu",
+                "Hôm nay trải nghiệm quả giao diện nhận mã OTP đỉnh cao của công nghệ 4.0 anh em ạ",
+                R.drawable.img01,
+                0
+        ));
+
+        articleList.add(new Article(
+                "Đề thi bằng lái xe hạng \"Vô cực\"",
+                "Thi lý thuyết bằng lái gặp đúng câu này thì chỉ biết chắp tay lạy thầy.",
+                R.drawable.img02,
+                0
+        ));
+
+        articleList.add(new Article(
+                "Bữa ăn chuẩn 5 sao tại gia",
+                "Góc học tập thì đầy mỹ phẩm với hộp đồ, nhưng đồ ăn thì không thể xơ xát được.\n" +
+                        "Cơm trắng đầy ắp, gà rán vàng ươm, thìa mạ vàng chuẩn style hoàng gia! Ăn xong làm ngụm canh rồi ngồi học bài là vừa đẹp.",
+                R.drawable.img03,
+                0
+        ));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +54,25 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        countryList.add("Vietnam");
-        countryList.add("USA");
-        countryList.add("China");
-        countryList.add("Japan");
-        countryList.add("Korea");
+        initData();
 
         recyclerView = findViewById(R.id.recyclerView);
-        btLoad = findViewById(R.id.btLoad);
-        btLoad.setOnClickListener(v -> {
-            MyAdapter myAdapter = new MyAdapter(v.getContext(), countryList);
-            recyclerView.setLayoutManager(
-                    new LinearLayoutManager(this)
-            );
-            recyclerView.setAdapter(myAdapter);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        articleAdapter = new ArticleAdapter(this, articleList, new ArticleAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Article article, int position) {
+                article.increaseView();
+
+                articleAdapter.notifyItemChanged(position);
+
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                intent.putExtra("article_key", article);
+                startActivity(intent);
+            }
         });
+
+        recyclerView.setAdapter(articleAdapter);
     }
 }
