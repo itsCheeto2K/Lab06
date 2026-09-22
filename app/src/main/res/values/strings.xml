@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lab06</string>
+    <string name="app_name">Lab06 - MTriet</string>
     <string name="tieu_de_01">Tiêu đề bài viết mẫu</string>
     <string name="td_chi_tiet">Tiêu đề bài viết chi tiết</string>
     <string name="noi_dung_01">Nội dung tóm tắt của bài viết được hiển thị tại đây...</string>
